@@ -1,15 +1,20 @@
-from PIL import Image
-import requests
+import base64 as b64
 from io import BytesIO
-from rembg import remove
-import base64
 
-def remove_bg_of_img(image_url):
-    response = requests.get(image_url)
-    img = Image.open(BytesIO(response.content))
+import requests
+from PIL import Image
+from rembg import remove
+
+
+def remove_bg_of_img(image_url: str | None = None, image_base64: str | None = None):
+    if image_url:
+        response = requests.get(image_url)
+        img = Image.open(BytesIO(response.content))
+    elif image_base64:
+        img = Image.open(BytesIO(b64.b64decode(image_base64)))
+    else:
+        raise ValueError("Either image_url or image_base64 must be provided")
     output = remove(img)
     out_stream = BytesIO()
     output.save(out_stream, format="PNG")
-    image_data = out_stream.getvalue()
-    base64_image = base64.b64encode(image_data).decode('utf-8')
-    return base64_image
+    return b64.b64encode(out_stream.getvalue()).decode("utf-8")
