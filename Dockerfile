@@ -23,8 +23,8 @@ WORKDIR /
 # Install Python dependencies (Worker Template)
 COPY builder/requirements.txt /requirements.txt
 RUN python3 -m pip install --upgrade pip && \
+    python3 -m pip install --no-cache-dir torch torchvision --index-url https://download.pytorch.org/whl/cu124 && \
     python3 -m pip install --upgrade -r /requirements.txt --no-cache-dir && \
-    python3 -m pip install "uvicorn[standard]" && \
     rm /requirements.txt
 
 # Add src files (Worker Template)

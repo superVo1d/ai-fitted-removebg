@@ -1,7 +1,24 @@
 # Required Python packages get listed here, one per line.
-# Reccomended to lock the version number to avoid unexpected changes.
+# Recommended to lock the version number to avoid unexpected changes.
+#
+# torch + torchvision: installed in Dockerfile from PyTorch CUDA wheels (not PyPI),
+# so pip does not install the CPU-only torch build.
+#
+# Aligned with https://huggingface.co/spaces/not-lain/background-removal (minus Gradio/Spaces UI).
 
 runpod==1.2.0
 fastapi
 pydantic
-rembg==2.0.50
+requests
+uvicorn[standard]
+
+accelerate
+opencv-python
+pillow
+numpy
+timm
+kornia
+scikit-image
+huggingface_hub
+transformers>=4.39.1
+einops
