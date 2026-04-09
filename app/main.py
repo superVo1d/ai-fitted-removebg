@@ -1,5 +1,3 @@
-from typing import Union
-
 from fastapi import FastAPI
 from pydantic import BaseModel
 from services.remove_bg import remove_bg_of_img
@@ -15,8 +13,8 @@ def fetch(item: Item):
     try:
         no_bg = remove_bg_of_img(image_url=item.url, image_base64=item.base64)
         return {"image": no_bg}
-    except:
-        return {"content": "Unknown error", "status":500}
+    except Exception as e:
+        return {"content": f"{e}", "status": 500}
 
 @app.get("/api/v1/status")
 def status():
