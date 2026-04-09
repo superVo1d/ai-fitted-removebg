@@ -3,6 +3,8 @@ FROM python:3.10.9-slim as build_final_image
 
 ARG SHA=5ef669de080814067961f28357256e8fe27544f4
 
+ENV HF_TOKEN=${HF_TOKEN}
+
 ENV DEBIAN_FRONTEND=noninteractive \
     PIP_PREFER_BINARY=1 \
     LD_PRELOAD=libtcmalloc.so \

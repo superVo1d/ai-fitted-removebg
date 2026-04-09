@@ -48,6 +48,9 @@ def _remove_bg_pil(image: Image.Image) -> Image.Image:
     device = _device_torch()
     model = _load_model()
     batch = _transform_image(im).unsqueeze(0).to(device)
+    param_dtype = next(model.parameters()).dtype
+    if batch.dtype != param_dtype:
+        batch = batch.to(dtype=param_dtype)
     with torch.no_grad():
         preds = model(batch)[-1].sigmoid().cpu()
     pred = preds[0].squeeze()
